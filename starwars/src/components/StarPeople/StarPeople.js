@@ -37,7 +37,7 @@ const ForwardButton = () => {
   )
 }
 
-function StarPeople(props) {
+function StarPeople() {
 
   const [person, setPerson] = useState([]);
   const [count, setCount] = useState(1);
@@ -48,18 +48,26 @@ function StarPeople(props) {
     .then(response => {
       console.log(response);
       setPerson(response.data.results);
+      setCount(count);
     })
     .catch(error => {
       console.log(error);
     })
 
-  }, []);
+  }, [count]);
+
+  const nextPage = () => {
+    console.log('Button Clicked')
+    setCount(count + 1);
+
+  }
+  const prevPage = () => setCount(count - 1)
 
   return (
     <div>
       <ButtonBox>
-        <BackButton onClick={() => setCount(count > 1 ? count - 1 : count)}/>
-        <ForwardButton onClick={() => setCount(count + 1)}/>
+        <BackButton onClick={() => prevPage()}/>
+        <ForwardButton onClick={() => nextPage()}/>
       </ButtonBox>
       <StyledContainer>
         {person.map(person => {
